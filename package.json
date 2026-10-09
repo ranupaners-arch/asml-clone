@@ -1,1 +1,1 @@
-{"name":"asml-website-clone","private":true,"type":"module","scripts":{"build":"node generate.mjs","dev":"node generate.mjs && cd dist && python -m http.server 3000"}}
+{"name":"asml-website-clone","private":true,"type":"module","scripts":{"build":"node generate.mjs","dev":"node generate.mjs && cd dist && python3 -m http.server 3000"}}
