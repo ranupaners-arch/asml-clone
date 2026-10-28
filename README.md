@@ -1,23 +1,72 @@
-# ASML site reproduction
+# ASML Website Clone
 
-A static, multi-page reproduction of the main English ASML navigation and selected editorial pages. The generated output lives in `dist/`.
+Reproduksi statis (tidak resmi) dari struktur navigasi utama situs ASML berbahasa Inggris, dibuat sebagai eksperimen desain/front-end oleh Ranupane Rimba Argana. Ditujukan untuk siapa pun yang ingin melihat contoh situs multi-halaman yang dibangun murni dari generator statis tanpa framework.
 
-## Run
+## Fitur Utama
+
+- Generator statis (`generate.mjs`) yang membangun seluruh halaman HTML dari data terstruktur di `src/data.mjs`
+- Menu navigasi bertingkat (mega menu) dengan panel per kategori, navigasi mundur ("Back"), dan drawer mobile
+- Pencarian sisi klien yang membaca `search-index.json` hasil build
+- Banner dan dialog preferensi cookie dengan penyimpanan pilihan di `localStorage`
+- Carousel lokasi kantor (geser kiri/kanan) di halaman beranda
+- Breadcrumb otomatis berdasarkan hierarki halaman
+- Halaman riwayat perusahaan per dekade (1980-an sampai 2020-an)
+- Footer dengan grup tautan (Learn, Work at ASML, Invest, Get in touch) dan tautan media sosial
+
+## Tech Stack
+
+- Node.js (ESM, `"type": "module"`) — tanpa dependency npm eksternal, hanya modul bawaan `node:fs/promises` dan `node:path`
+- Vanilla JavaScript (`src/site.js`) untuk interaktivitas di browser
+- CSS murni (`src/styles.css`)
+- Python 3 `http.server` untuk menyajikan hasil build secara lokal
+- Output statis berupa file HTML dan `search-index.json`
+
+## Cara Menjalankan Lokal
+
+Tidak ada dependency npm yang perlu diinstal dan tidak ada file environment (`.env`) yang dibutuhkan. Pastikan `Node.js` dan `Python 3` sudah terpasang.
+
+Build sekaligus jalankan server lokal:
 
 ```sh
 npm run dev
 ```
 
-This builds the site into `dist/` and then serves it on `http://localhost:3000/en/`. Keep the terminal running while navigating between pages. It is a one-off build plus a static server, so re-run it after changing files in `src/`.
+Ini akan membangun situs ke folder `dist/` lalu menyajikannya di `http://localhost:3000/en/`. Biarkan terminal tetap berjalan saat menjelajah antar halaman, dan jalankan ulang setiap kali mengubah file di `src/`.
 
-## Build only
+Hanya membangun tanpa menjalankan server:
 
 ```sh
 npm run build
 ```
 
-No dependencies are needed. `generate.mjs` builds the navigation routes and page templates from `src/data.mjs`, `src/styles.css`, and `src/site.js`.
+Untuk preview manual setelah build:
 
-To preview a build manually, run `python3 -m http.server 8000 --directory dist`, then open `http://localhost:8000/en/`.
+```sh
+python3 -m http.server 8000 --directory dist
+```
 
-This is an unofficial design exercise. News and investor destinations lead to ASML's live investor website. Media files are served from ASML's public media host; their availability depends on that host.
+lalu buka `http://localhost:8000/en/`.
+
+## Struktur Folder
+
+```
+generate.mjs     Script generator/build utama
+src/data.mjs      Data konten, navigasi, dan referensi gambar
+src/site.js       Interaktivitas sisi klien (menu, pencarian, cookie, carousel)
+src/styles.css    Styling halaman
+public/           Aset statis (favicon) yang disalin ke dist/
+dist/             Hasil build (digenerate otomatis, jangan diedit manual)
+```
+
+## Deploy / Rilis
+
+Belum ada workflow CI/CD. Situs dihasilkan secara lokal dengan `npm run build`, dan folder `dist/` yang terbentuk bisa disajikan oleh server statis apa pun.
+
+Catatan: ini adalah proyek latihan desain yang tidak resmi. Tautan News dan Investor mengarah ke situs investor ASML yang asli, dan berkas media diambil dari host media publik ASML sehingga ketersediaannya tergantung pada host tersebut.
+
+## Kredit
+
+Dibuat oleh **Ranupane Rimba Argana**, founder [Kukerjain](https://kukerjain.dev).
+
+- Website: https://kukerjain.dev
+- Portofolio: https://ranupane.kukerjain.dev
